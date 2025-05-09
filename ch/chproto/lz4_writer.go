@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 
 	"github.com/pierrec/lz4/v4"
+
 	"github.com/glassdomeinc/clicky/ch/internal"
 	"github.com/glassdomeinc/clicky/ch/internal/cityhash102"
 )

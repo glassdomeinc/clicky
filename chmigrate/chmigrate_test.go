@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
 	"github.com/glassdomeinc/clicky/ch"
 	"github.com/glassdomeinc/clicky/chdebug"
 	"github.com/glassdomeinc/clicky/chmigrate"

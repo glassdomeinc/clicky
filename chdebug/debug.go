@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+
 	"github.com/glassdomeinc/clicky/ch"
 )
 

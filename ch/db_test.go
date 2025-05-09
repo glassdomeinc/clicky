@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+
 	"github.com/glassdomeinc/clicky/ch"
 	"github.com/glassdomeinc/clicky/chdebug"
 )

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/bradleyjkemp/cupaloy"
+
 	"github.com/glassdomeinc/clicky/ch"
 	"github.com/glassdomeinc/clicky/ch/chschema"
 )

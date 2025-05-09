@@ -7,10 +7,11 @@ import (
 	"os"
 	"strings"
 
+	"go.opentelemetry.io/otel/trace"
+
 	"github.com/glassdomeinc/clicky/ch/chpool"
 	"github.com/glassdomeinc/clicky/ch/chproto"
 	"github.com/glassdomeinc/clicky/ch/chschema"
-	"go.opentelemetry.io/otel/trace"
 )
 
 const (

@@ -9,8 +9,9 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
-	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.30.0"
 	"go.opentelemetry.io/otel/trace"
+
 	"github.com/glassdomeinc/clicky/ch"
 )
 
@@ -47,17 +48,17 @@ func (h *QueryHook) AfterQuery(ctx context.Context, event *ch.QueryEvent) {
 	span.SetName(operation)
 
 	attrs := []attribute.KeyValue{
-		semconv.CodeFunctionKey.String(fn),
+		semconv.CodeFunctionNameKey.String(fn),
 		semconv.CodeFilepathKey.String(file),
 		semconv.CodeLineNumberKey.Int(line),
-		semconv.DBSystemKey.String("clickhouse"),
-		semconv.DBOperationKey.String(operation),
-		semconv.DBStatementKey.String(event.Query),
+		semconv.DBSystemNameKey.String("clickhouse"),
+		semconv.DBOperationNameKey.String(operation),
+		attribute.Key("db.statement").String(event.Query),
 	}
 
 	if event.IQuery != nil {
 		if tableName := event.IQuery.GetTableName(); tableName != "" {
-			attrs = append(attrs, semconv.DBSQLTableKey.String(tableName))
+			attrs = append(attrs, attribute.Key("db.sql.table").String(tableName))
 		}
 	}
 

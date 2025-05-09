@@ -12,10 +12,11 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/exp/constraints"
+
 	"github.com/glassdomeinc/clicky/ch/bfloat16"
 	"github.com/glassdomeinc/clicky/ch/chproto"
 	"github.com/glassdomeinc/clicky/ch/internal"
-	"golang.org/x/exp/constraints"
 )
 
 type Column struct {
