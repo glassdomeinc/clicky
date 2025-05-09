@@ -267,7 +267,8 @@ func TestScanArrayUint8(t *testing.T) {
 
 func TestDateTime64(t *testing.T) {
 	type Model struct {
-		Time time.Time `ch:"type:DateTime64(9)"`
+		Time       time.Time `ch:"type:DateTime64(9)"`
+		TimeWithTZ time.Time `ch:"type:DateTime64(9, 'UTC')"`
 	}
 
 	ctx := context.Background()
@@ -278,7 +279,10 @@ func TestDateTime64(t *testing.T) {
 	err := db.ResetModel(ctx, (*Model)(nil))
 	require.NoError(t, err)
 
-	in := &Model{Time: time.Unix(0, 12345678912345)}
+	in := &Model{
+		Time:       time.Unix(0, 12345678912345),
+		TimeWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
+	}
 	_, err = db.NewInsert().Model(in).Exec(ctx)
 	require.NoError(t, err)
 
@@ -286,6 +290,7 @@ func TestDateTime64(t *testing.T) {
 	err = db.NewSelect().Model(out).Scan(ctx)
 	require.NoError(t, err)
 	require.Equal(t, in.Time.UnixNano(), out.Time.UnixNano())
+	require.Equal(t, in.TimeWithTZ.UnixNano(), out.TimeWithTZ.UnixNano())
 }
 
 func TestInvalidType(t *testing.T) {

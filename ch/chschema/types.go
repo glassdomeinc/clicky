@@ -346,6 +346,10 @@ func parseDateTime64Prec(s string) int {
 	if s == "" {
 		return 0
 	}
+
+	// handle the case of timezone in the DateTime64 definition.
+	s = strings.Split(s, ",")[0]
+
 	prec, err := strconv.Atoi(s)
 	if err != nil {
 		return 0
