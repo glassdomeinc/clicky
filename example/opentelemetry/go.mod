@@ -1,19 +1,19 @@
-module github.com/uptrace/go-clickhouse/example/opentelemetry
+module github.com/glassdomeinc/clicky/example/opentelemetry
 
 go 1.18
 
-replace github.com/uptrace/go-clickhouse => ../..
+replace github.com/glassdomeinc/clicky => ../..
 
-replace github.com/uptrace/go-clickhouse/chdebug => ../../chdebug
+replace github.com/glassdomeinc/clicky/chdebug => ../../chdebug
 
-replace github.com/uptrace/go-clickhouse/chotel => ../../chotel
+replace github.com/glassdomeinc/clicky/chotel => ../../chotel
 
 exclude go.opentelemetry.io/proto/otlp v0.15.0
 
 require (
 	github.com/brianvoe/gofakeit/v5 v5.11.2
-	github.com/uptrace/go-clickhouse v0.3.1
-	github.com/uptrace/go-clickhouse/chotel v0.3.1
+	github.com/glassdomeinc/clicky v0.3.1
+	github.com/glassdomeinc/clicky/chotel v0.3.1
 	github.com/uptrace/opentelemetry-go-extra/otelplay v0.2.1
 	go.opentelemetry.io/otel v1.16.0
 )

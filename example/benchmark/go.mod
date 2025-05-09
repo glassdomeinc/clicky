@@ -1,12 +1,12 @@
-module github.com/uptrace/go-clickhouse/ch/internal/bench
+module github.com/glassdomeinc/clicky/ch/internal/bench
 
 go 1.18
 
-replace github.com/uptrace/go-clickhouse => ../..
+replace github.com/glassdomeinc/clicky => ../..
 
-replace github.com/uptrace/go-clickhouse/chdebug => ../../chdebug
+replace github.com/glassdomeinc/clicky/chdebug => ../../chdebug
 
-require github.com/uptrace/go-clickhouse v0.3.1
+require github.com/glassdomeinc/clicky v0.3.1
 
 require (
 	github.com/codemodus/kace v0.5.1 // indirect

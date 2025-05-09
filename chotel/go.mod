@@ -1,4 +1,4 @@
-module github.com/uptrace/go-clickhouse/chotel
+module github.com/glassdomeinc/clicky/chotel
 
 go 1.18
 

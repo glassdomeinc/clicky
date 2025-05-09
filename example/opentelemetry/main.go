@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"github.com/brianvoe/gofakeit/v5"
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chotel"
+	"github.com/glassdomeinc/clicky/ch"
+	"github.com/glassdomeinc/clicky/chotel"
 	"github.com/uptrace/opentelemetry-go-extra/otelplay"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
 )
 
-var tracer = otel.Tracer("github.com/uptrace/go-clickhouse/example/opentelemetry")
+var tracer = otel.Tracer("github.com/glassdomeinc/clicky/example/opentelemetry")
 
 func main() {
 	ctx := context.Background()

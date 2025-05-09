@@ -1,14 +1,14 @@
-module github.com/uptrace/go-clickhouse/example/migrations
+module github.com/glassdomeinc/clicky/example/migrations
 
 go 1.18
 
-replace github.com/uptrace/go-clickhouse => ../..
+replace github.com/glassdomeinc/clicky => ../..
 
-replace github.com/uptrace/go-clickhouse/chdebug => ../../chdebug
+replace github.com/glassdomeinc/clicky/chdebug => ../../chdebug
 
 require (
-	github.com/uptrace/go-clickhouse v0.3.1
-	github.com/uptrace/go-clickhouse/chdebug v0.3.1
+	github.com/glassdomeinc/clicky v0.3.1
+	github.com/glassdomeinc/clicky/chdebug v0.3.1
 	github.com/urfave/cli/v2 v2.25.5
 )
 

@@ -3,7 +3,7 @@ package migrations
 import (
 	"embed"
 
-	"github.com/uptrace/go-clickhouse/chmigrate"
+	"github.com/glassdomeinc/clicky/chmigrate"
 )
 
 var Migrations = chmigrate.NewMigrations()
