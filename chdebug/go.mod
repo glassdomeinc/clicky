@@ -1,6 +1,6 @@
 module github.com/glassdomeinc/clicky/chdebug
 
-go 1.18
+go 1.24.1
 
 replace github.com/glassdomeinc/clicky => ./..
 
