@@ -144,7 +144,7 @@ func testChmigrateUpError(t *testing.T, db *ch.DB) {
 func chDB(opts ...ch.Option) *ch.DB {
 	dsn := os.Getenv("CH")
 	if dsn == "" {
-		dsn = "clickhouse://localhost:9000/test?sslmode=disable"
+		dsn = "clickhouse://clickhouse:secret@localhost:9000/default?sslmode=disable"
 	}
 
 	opts = append(opts, ch.WithDSN(dsn))

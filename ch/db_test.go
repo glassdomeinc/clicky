@@ -21,7 +21,7 @@ import (
 func chDB(opts ...ch.Option) *ch.DB {
 	dsn := os.Getenv("CH")
 	if dsn == "" {
-		dsn = "clickhouse://localhost:9000/test?sslmode=disable"
+		dsn = "clickhouse://clickhouse:secret@localhost:9000/default?sslmode=disable"
 	}
 
 	opts = append(opts, ch.WithDSN(dsn), ch.WithAutoCreateDatabase(true))
@@ -38,7 +38,7 @@ func TestAutoCreateDatabase(t *testing.T) {
 	dbName := "auto_create_database"
 
 	{
-		db := ch.Connect()
+		db := chDB()
 		defer db.Close()
 
 		_, err := db.Exec("DROP DATABASE IF EXISTS ?", ch.Name(dbName))
@@ -46,7 +46,7 @@ func TestAutoCreateDatabase(t *testing.T) {
 	}
 
 	{
-		db := ch.Connect(
+		db := chDB(
 			ch.WithDatabase(dbName),
 			ch.WithAutoCreateDatabase(true),
 		)
@@ -93,7 +93,7 @@ func TestDSNSetting(t *testing.T) {
 	for _, value := range []int{0, 1} {
 		t.Run("prefer_column_name_to_alias=%d", func(t *testing.T) {
 			db := ch.Connect(ch.WithDSN(fmt.Sprintf(
-				"clickhouse://localhost:9000/default?sslmode=disable&prefer_column_name_to_alias=%d",
+				"clickhouse://clickhouse:secret@localhost:9000/default?sslmode=disable&prefer_column_name_to_alias=%d",
 				value,
 			)))
 			defer db.Close()
