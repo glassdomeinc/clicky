@@ -6,7 +6,7 @@ replace github.com/glassdomeinc/clicky => ./..
 
 require (
 	github.com/fatih/color v1.15.0
-	github.com/glassdomeinc/clicky v0.3.1
+	github.com/glassdomeinc/clicky v0.3.2
 )
 
 require (

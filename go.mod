@@ -7,7 +7,7 @@ replace github.com/glassdomeinc/clicky/chdebug => ./chdebug
 require (
 	github.com/bradleyjkemp/cupaloy v2.3.0+incompatible
 	github.com/codemodus/kace v0.5.1
-	github.com/glassdomeinc/clicky/chdebug v0.3.1
+	github.com/glassdomeinc/clicky/chdebug v0.3.2
 	github.com/jinzhu/inflection v1.0.0
 	github.com/pierrec/lz4/v4 v4.1.17
 	github.com/stretchr/testify v1.8.3
