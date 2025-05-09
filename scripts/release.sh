@@ -53,11 +53,10 @@ done
 
 for dir in $PACKAGE_DIRS
 do
-    sed --in-place \
-        "s/glassdomeinc\/clicky\([^ ]*\) v.*/glassdomeinc\/clicky\1 ${TAG}/" "${dir}/go.mod"
+    sed -i '' "s/glassdomeinc\/clicky\([^ ]*\) v.*/glassdomeinc\/clicky\1 ${TAG}/" "${dir}/go.mod"
 done
 
-sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
+sed -i '' "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go
 git checkout -b release/${TAG} main
 git add -u
 git commit -m "chore: release $TAG (release.sh)"
