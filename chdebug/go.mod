@@ -1,12 +1,12 @@
-module github.com/uptrace/go-clickhouse/chdebug
+module github.com/glassdomeinc/clicky/chdebug
 
 go 1.18
 
-replace github.com/uptrace/go-clickhouse => ./..
+replace github.com/glassdomeinc/clicky => ./..
 
 require (
 	github.com/fatih/color v1.15.0
-	github.com/uptrace/go-clickhouse v0.3.1
+	github.com/glassdomeinc/clicky v0.3.1
 )
 
 require (

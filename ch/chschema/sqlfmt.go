@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glassdomeinc/clicky/ch/internal"
 )
 
 type QueryAppender interface {

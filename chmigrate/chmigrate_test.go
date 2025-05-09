@@ -10,9 +10,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
-	"github.com/uptrace/go-clickhouse/chmigrate"
+	"github.com/glassdomeinc/clicky/ch"
+	"github.com/glassdomeinc/clicky/chdebug"
+	"github.com/glassdomeinc/clicky/chmigrate"
 )
 
 func TestMigrate(t *testing.T) {

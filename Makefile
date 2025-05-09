@@ -27,7 +27,7 @@ deps:
 
 fmt:
 	gofmt -w -s ./
-	goimports -w  -local github.com/uptrace/go-clickhouse ./
+	goimports -w  -local github.com/glassdomeinc/clicky ./
 
 codegen:
 	go run ./ch/internal/codegen/ -dir=ch/chschema

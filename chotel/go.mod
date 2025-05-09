@@ -2,14 +2,14 @@ module github.com/uptrace/go-clickhouse/chotel
 
 go 1.18
 
-replace github.com/uptrace/go-clickhouse => ./..
+replace github.com/glassdomeinc/clicky => ./..
 
-replace github.com/uptrace/go-clickhouse/chdebug => ../chdebug
+replace github.com/glassdomeinc/clicky/chdebug => ../chdebug
 
 exclude go.opentelemetry.io/proto/otlp v0.15.0
 
 require (
-	github.com/uptrace/go-clickhouse v0.3.1
+	github.com/glassdomeinc/clicky v0.3.1
 	go.opentelemetry.io/otel v1.16.0
 	go.opentelemetry.io/otel/trace v1.16.0
 )

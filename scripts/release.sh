@@ -54,7 +54,7 @@ done
 for dir in $PACKAGE_DIRS
 do
     sed --in-place \
-        "s/uptrace\/go-clickhouse\([^ ]*\) v.*/uptrace\/go-clickhouse\1 ${TAG}/" "${dir}/go.mod"
+        "s/glassdomeinc\/clicky\([^ ]*\) v.*/glassdomeinc\/clicky\1 ${TAG}/" "${dir}/go.mod"
 done
 
 sed --in-place "s/\(return \)\"[^\"]*\"/\1\"${TAG#v}\"/" ./version.go

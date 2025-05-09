@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/uptrace/go-clickhouse/ch/bfloat16"
-	"github.com/uptrace/go-clickhouse/ch/chtype"
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glassdomeinc/clicky/ch/bfloat16"
+	"github.com/glassdomeinc/clicky/ch/chtype"
+	"github.com/glassdomeinc/clicky/ch/internal"
 )
 
 var (

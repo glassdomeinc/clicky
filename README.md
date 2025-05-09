@@ -1,12 +1,8 @@
-# ClickHouse client for Go 1.18+
+# ClickHouse client for Go
 
-[![build workflow](https://github.com/uptrace/go-clickhouse/actions/workflows/build.yml/badge.svg)](https://github.com/uptrace/go-clickhouse/actions)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/uptrace/go-clickhouse/ch)](https://pkg.go.dev/github.com/go-clickhouse/ch)
-[![Documentation](https://img.shields.io/badge/ch-documentation-informational)](https://clickhouse.uptrace.dev/)
-[![Chat](https://discordapp.com/api/guilds/752070105847955518/widget.png)](https://discord.gg/rWtp5Aj)
+This is a fork from uptace
 
-This ClickHouse client uses native protocol to communicate with ClickHouse server and requires Go
-1.18+ in order to use generics. This is not a database/sql driver, but the API is compatible.
+This ClickHouse client uses native protocol to communicate with ClickHouse server. This is not a database/sql driver, but the API is compatible.
 
 Main features are:
 
@@ -27,32 +23,12 @@ Main features are:
 Resources:
 
 - [**Get started**](https://clickhouse.uptrace.dev/guide/getting-started.html)
-- [Examples](https://github.com/uptrace/go-clickhouse/tree/master/example)
-- [Discussions](https://github.com/uptrace/go-clickhouse/discussions)
-- [Chat](https://discord.gg/rWtp5Aj)
-- [Reference](https://pkg.go.dev/github.com/uptrace/go-clickhouse/ch)
-- [Example app](https://github.com/uptrace/uptrace)
-
-## Benchmark
-
-**Read** (best of 3 runs):
-
-| Library                                                                                                            | Timing |
-| ------------------------------------------------------------------------------------------------------------------ | ------ |
-| [This library](example/benchmark/read-native/main.go)                                                              | 655ms  |
-| [ClickHouse/clickhouse-go](https://github.com/ClickHouse/clickhouse-go/blob/main/benchmark/v2/read-native/main.go) | 849ms  |
-
-**Write** (best of 3 runs):
-
-| Library                                                                                                                      | Timing |
-| ---------------------------------------------------------------------------------------------------------------------------- | ------ |
-| [This library](example/benchmark/write-native-columnar/main.go)                                                              | 475ms  |
-| [ClickHouse/clickhouse-go](https://github.com/ClickHouse/clickhouse-go/blob/main/benchmark/v2/write-native-columnar/main.go) | 881ms  |
+- [Examples](https://github.com/glassdomeinc/clicky/tree/master/example)
 
 ## Installation
 
 ```shell
-go get github.com/uptrace/go-clickhouse@latest
+go get github.com/glassdomeinc/clicky@latest
 ```
 
 ## Example
@@ -67,8 +43,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
+	"github.com/glassdomeinc/clicky/ch"
+	"github.com/glassdomeinc/clicky/chdebug"
 )
 
 type Model struct {
@@ -111,9 +87,3 @@ func main() {
 	fmt.Println(dest)
 }
 ```
-
-## See also
-
-- [Golang ORM](https://github.com/uptrace/bun) for PostgreSQL, MySQL, MSSQL, and SQLite
-- [Golang PostgreSQL](https://bun.uptrace.dev/postgres/)
-- [Golang HTTP router](https://github.com/uptrace/bunrouter)

@@ -3,7 +3,7 @@ package chschema
 import (
 	"reflect"
 
-	"github.com/uptrace/go-clickhouse/ch/chproto"
+	"github.com/glassdomeinc/clicky/ch/chproto"
 )
 
 type NullableColumn struct {

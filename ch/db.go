@@ -12,10 +12,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/uptrace/go-clickhouse/ch/chpool"
-	"github.com/uptrace/go-clickhouse/ch/chproto"
-	"github.com/uptrace/go-clickhouse/ch/chschema"
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glassdomeinc/clicky/ch/chpool"
+	"github.com/glassdomeinc/clicky/ch/chproto"
+	"github.com/glassdomeinc/clicky/ch/chschema"
+	"github.com/glassdomeinc/clicky/ch/internal"
 )
 
 type DBStats struct {

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/uptrace/go-clickhouse/ch/chpool"
-	"github.com/uptrace/go-clickhouse/ch/internal"
+	"github.com/glassdomeinc/clicky/ch/chpool"
+	"github.com/glassdomeinc/clicky/ch/internal"
 )
 
 const (

@@ -11,8 +11,7 @@ import (
 	"go.opentelemetry.io/otel/codes"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"go.opentelemetry.io/otel/trace"
-
-	"github.com/uptrace/go-clickhouse/ch"
+	"github.com/glassdomeinc/clicky/ch"
 )
 
 var tracer = otel.Tracer("go-clickhouse")

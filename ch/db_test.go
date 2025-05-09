@@ -13,9 +13,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"github.com/uptrace/go-clickhouse/ch"
-	"github.com/uptrace/go-clickhouse/chdebug"
+	"github.com/glassdomeinc/clicky/ch"
+	"github.com/glassdomeinc/clicky/chdebug"
 )
 
 func chDB(opts ...ch.Option) *ch.DB {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/uptrace/go-clickhouse/ch/internal/tagparser"
+	"github.com/glassdomeinc/clicky/ch/internal/tagparser"
 )
 
 var tagTests = []struct {
