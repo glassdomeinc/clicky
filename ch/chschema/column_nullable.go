@@ -12,10 +12,10 @@ type NullableColumn struct {
 	nullable reflect.Value // reflect.Slice
 }
 
-func NewNullableColumnFunc(fn NewColumnFunc) NewColumnFunc {
+func NewNullableColumnFunc(col Columnar) NewColumnFunc {
 	return func() Columnar {
 		return &NullableColumn{
-			Values: fn(),
+			Values: col,
 		}
 	}
 }
