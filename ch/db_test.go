@@ -267,6 +267,9 @@ func TestScanArrayUint8(t *testing.T) {
 
 func TestDateTime64(t *testing.T) {
 	type Model struct {
+		TimeSecPrec       time.Time `ch:"type:DateTime64(0)"`
+		TimeSecPrecWithTZ time.Time `ch:"type:DateTime64(0, 'UTC')"`
+
 		TimeNanoPrec       time.Time `ch:"type:DateTime64(9)"`
 		TimeNanoPrecWithTZ time.Time `ch:"type:DateTime64(9, 'UTC')"`
 	}
@@ -280,6 +283,9 @@ func TestDateTime64(t *testing.T) {
 	require.NoError(t, err)
 
 	in := &Model{
+		TimeSecPrec:       time.Unix(0, 12345678912345),
+		TimeSecPrecWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
+
 		TimeNanoPrec:       time.Unix(0, 12345678912345),
 		TimeNanoPrecWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
 	}
@@ -289,6 +295,10 @@ func TestDateTime64(t *testing.T) {
 	out := new(Model)
 	err = db.NewSelect().Model(out).Scan(ctx)
 	require.NoError(t, err)
+
+	require.Equal(t, in.TimeSecPrec.Truncate(time.Second).UnixNano(), out.TimeSecPrec.UnixNano())
+	require.Equal(t, in.TimeSecPrecWithTZ.Truncate(time.Second).UnixNano(), out.TimeSecPrecWithTZ.UnixNano())
+
 	require.Equal(t, in.TimeNanoPrec.UnixNano(), out.TimeNanoPrec.UnixNano())
 	require.Equal(t, in.TimeNanoPrecWithTZ.UnixNano(), out.TimeNanoPrecWithTZ.UnixNano())
 }
