@@ -114,7 +114,7 @@ func TestDSNSetting(t *testing.T) {
 	}
 }
 
-func TestNullable(t *testing.T) {
+func TestNullableString(t *testing.T) {
 	ctx := context.Background()
 
 	db := chDB()
