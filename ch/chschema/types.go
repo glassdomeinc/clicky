@@ -197,7 +197,7 @@ func ColumnFactory(chType string, typ reflect.Type) NewColumnFunc {
 		if typ != nil {
 			typ = typ.Elem()
 		}
-		return NewNullableColumnFunc(NewColumn(chType, typ))
+		return NewNullableColumnFunc(chType, typ)
 	}
 
 	if chType := chSimpleAggFunc(chType); chType != "" {
@@ -224,7 +224,7 @@ func ColumnFactory(chType string, typ reflect.Type) NewColumnFunc {
 		if typ.Elem().Kind() == reflect.Struct {
 			return NewJSONColumn
 		}
-		return NewNullableColumnFunc(NewColumn(chNullableType(chType), typ.Elem()))
+		return NewNullableColumnFunc(chNullableType(chType), typ.Elem())
 	case reflect.Slice:
 		switch elem := typ.Elem(); elem.Kind() {
 		case reflect.Ptr:
