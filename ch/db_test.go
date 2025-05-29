@@ -114,7 +114,7 @@ func TestDSNSetting(t *testing.T) {
 	}
 }
 
-func TestNullable(t *testing.T) {
+func TestNullableString(t *testing.T) {
 	ctx := context.Background()
 
 	db := chDB()
@@ -267,8 +267,11 @@ func TestScanArrayUint8(t *testing.T) {
 
 func TestDateTime64(t *testing.T) {
 	type Model struct {
-		Time       time.Time `ch:"type:DateTime64(9)"`
-		TimeWithTZ time.Time `ch:"type:DateTime64(9, 'UTC')"`
+		TimeSecPrec       time.Time `ch:"type:DateTime64(0)"`
+		TimeSecPrecWithTZ time.Time `ch:"type:DateTime64(0, 'UTC')"`
+
+		TimeNanoPrec       time.Time `ch:"type:DateTime64(9)"`
+		TimeNanoPrecWithTZ time.Time `ch:"type:DateTime64(9, 'UTC')"`
 	}
 
 	ctx := context.Background()
@@ -280,8 +283,11 @@ func TestDateTime64(t *testing.T) {
 	require.NoError(t, err)
 
 	in := &Model{
-		Time:       time.Unix(0, 12345678912345),
-		TimeWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
+		TimeSecPrec:       time.Unix(0, 12345678912345),
+		TimeSecPrecWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
+
+		TimeNanoPrec:       time.Unix(0, 12345678912345),
+		TimeNanoPrecWithTZ: time.Unix(0, 12345678912345).In(time.UTC),
 	}
 	_, err = db.NewInsert().Model(in).Exec(ctx)
 	require.NoError(t, err)
@@ -289,8 +295,77 @@ func TestDateTime64(t *testing.T) {
 	out := new(Model)
 	err = db.NewSelect().Model(out).Scan(ctx)
 	require.NoError(t, err)
-	require.Equal(t, in.Time.UnixNano(), out.Time.UnixNano())
-	require.Equal(t, in.TimeWithTZ.UnixNano(), out.TimeWithTZ.UnixNano())
+
+	require.Equal(t, in.TimeSecPrec.Truncate(time.Second).UnixNano(), out.TimeSecPrec.UnixNano())
+	require.Equal(t, in.TimeSecPrecWithTZ.Truncate(time.Second).UnixNano(), out.TimeSecPrecWithTZ.UnixNano())
+
+	require.Equal(t, in.TimeNanoPrec.UnixNano(), out.TimeNanoPrec.UnixNano())
+	require.Equal(t, in.TimeNanoPrecWithTZ.UnixNano(), out.TimeNanoPrecWithTZ.UnixNano())
+}
+
+func TestNullableDateTime64(t *testing.T) {
+	type Model struct {
+		TimeNull       *time.Time `ch:"type:Nullable(DateTime64(0))"`
+		TimeNullWithTZ *time.Time `ch:"type:Nullable(DateTime64(0, 'UTC'))"`
+
+		TimeSecPrec       *time.Time `ch:"type:Nullable(DateTime64(0))"`
+		TimeSecPrecWithTZ *time.Time `ch:"type:Nullable(DateTime64(0, 'UTC'))"`
+
+		TimeMilliPrec       *time.Time `ch:"type:Nullable(DateTime64(3))"`
+		TimeMilliPrecWithTZ *time.Time `ch:"type:Nullable(DateTime64(3, 'UTC'))"`
+
+		TimeNanoPrec       *time.Time `ch:"type:Nullable(DateTime64(9))"`
+		TimeNanoPrecWithTZ *time.Time `ch:"type:Nullable(DateTime64(9, 'UTC'))"`
+	}
+
+	ctx := context.Background()
+
+	db := chDB()
+	defer db.Close()
+
+	err := db.ResetModel(ctx, (*Model)(nil))
+	require.NoError(t, err)
+
+	timeSecPrec := time.Unix(0, 12345678912345)
+	timeSecPrecWithTZ := time.Unix(0, 12345678912345).In(time.UTC)
+
+	timeMilliPrec := time.Unix(0, 12345678912345)
+	timeMilliPrecWithTZ := time.Unix(0, 12345678912345).In(time.UTC)
+
+	timeNanoPrec := time.Unix(0, 12345678912345)
+	timeNanoPrecWithTZ := time.Unix(0, 12345678912345).In(time.UTC)
+
+	in := &Model{
+		TimeNull:       nil,
+		TimeNullWithTZ: nil,
+
+		TimeSecPrec:       &timeSecPrec,
+		TimeSecPrecWithTZ: &timeSecPrecWithTZ,
+
+		TimeMilliPrec:       &timeMilliPrec,
+		TimeMilliPrecWithTZ: &timeMilliPrecWithTZ,
+
+		TimeNanoPrec:       &timeNanoPrec,
+		TimeNanoPrecWithTZ: &timeNanoPrecWithTZ,
+	}
+	_, err = db.NewInsert().Model(in).Exec(ctx)
+	require.NoError(t, err)
+
+	out := new(Model)
+	err = db.NewSelect().Model(out).Scan(ctx)
+	require.NoError(t, err)
+
+	require.Nil(t, out.TimeNull)
+	require.Nil(t, out.TimeNullWithTZ)
+
+	require.Equal(t, timeSecPrec.Truncate(time.Second).UnixNano(), out.TimeSecPrec.UnixNano())
+	require.Equal(t, timeSecPrecWithTZ.Truncate(time.Second).UnixNano(), out.TimeSecPrecWithTZ.UnixNano())
+
+	require.Equal(t, timeMilliPrec.Truncate(time.Millisecond).UnixNano(), out.TimeMilliPrec.UnixNano())
+	require.Equal(t, timeMilliPrecWithTZ.Truncate(time.Millisecond).UnixNano(), out.TimeMilliPrecWithTZ.UnixNano())
+
+	require.Equal(t, timeNanoPrec.UnixNano(), out.TimeNanoPrec.UnixNano())
+	require.Equal(t, timeNanoPrecWithTZ.UnixNano(), out.TimeNanoPrecWithTZ.UnixNano())
 }
 
 func TestInvalidType(t *testing.T) {

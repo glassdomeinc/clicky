@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   clickhouse:
@@ -7,4 +7,5 @@ services:
       - CLICKHOUSE_ADMIN_USER=clickhouse
       - CLICKHOUSE_ADMIN_PASSWORD=secret
     ports:
-      - '9000:9000'
+      - "9000:9000"
+      - "8123:8123"
