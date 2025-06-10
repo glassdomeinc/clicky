@@ -6,14 +6,16 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/glassdomeinc/clicky/ch"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/metric"
 	semconv "go.opentelemetry.io/otel/semconv/v1.30.0"
 	"go.opentelemetry.io/otel/trace"
-
-	"github.com/glassdomeinc/clicky/ch"
 )
+
+const instrumName = "github.com/glassdomeinc/clicky/chotel"
 
 var tracer = otel.Tracer("go-clickhouse")
 
@@ -103,4 +105,101 @@ func funcFileLine(pkg string) (string, string, int) {
 	}
 
 	return fn, file, line
+}
+
+type config struct {
+	meterProvider  metric.MeterProvider
+	meter          metric.Meter
+	attrs          []attribute.KeyValue
+	queryFormatter func(query string) string
+}
+
+type Option func(c *config)
+
+// WithAttributes configures attributes that are used to create a span.
+func WithAttributes(attrs ...attribute.KeyValue) Option {
+	return func(c *config) {
+		c.attrs = append(c.attrs, attrs...)
+	}
+}
+
+// WithDBSystem configures a db.system attribute. You should prefer using
+// WithAttributes and semconv, for example, `otelsql.WithAttributes(semconv.DBSystemSqlite)`.
+func WithDBSystem(system string) Option {
+	return func(c *config) {
+		c.attrs = append(c.attrs, semconv.DBSystemNameKey.String(system))
+	}
+}
+
+// WithDBName configures a db.name attribute.
+func WithDBName(name string) Option {
+	return func(c *config) {
+		c.attrs = append(c.attrs, attribute.Key("db.name").String(name))
+	}
+}
+
+// WithMeterProvider configures a metric.Meter used to create instruments.
+func WithMeterProvider(meterProvider metric.MeterProvider) Option {
+	return func(c *config) {
+		c.meterProvider = meterProvider
+	}
+}
+
+// WithQueryFormatter configures a query formatter
+func WithQueryFormatter(queryFormatter func(query string) string) Option {
+	return func(c *config) {
+		c.queryFormatter = queryFormatter
+	}
+}
+
+func newConfig(opts []Option) *config {
+	c := &config{
+		meterProvider: otel.GetMeterProvider(),
+	}
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c
+}
+
+// ReportDBStatsMetrics reports DBStats metrics using OpenTelemetry Metrics API.
+func ReportDBStatsMetrics(db *ch.DB, opts ...Option) {
+	cfg := newConfig(opts)
+
+	if cfg.meter == nil {
+		cfg.meter = cfg.meterProvider.Meter(instrumName)
+	}
+
+	meter := cfg.meter
+	labels := cfg.attrs
+
+	totalPoolConns, _ := meter.Int64ObservableGauge(
+		"go.ch.pool_connections_total",
+		metric.WithDescription("Number of total connections in the pool"),
+	)
+	idlePoolConns, _ := meter.Int64ObservableGauge(
+		"go.ch.pool_connections_idle",
+		metric.WithDescription("Number of idle connections in the pool"),
+	)
+
+	idlePoolStale, _ := meter.Int64ObservableGauge(
+		"go.ch.pool_connections_stale",
+		metric.WithDescription("Number of stale connections removed from the pool"),
+	)
+
+	if _, err := meter.RegisterCallback(
+		func(ctx context.Context, o metric.Observer) error {
+			stats := db.Stats()
+			o.ObserveInt64(totalPoolConns, int64(stats.PoolStats.TotalConns), metric.WithAttributes(labels...))
+			o.ObserveInt64(idlePoolConns, int64(stats.PoolStats.IdleConns), metric.WithAttributes(labels...))
+			o.ObserveInt64(idlePoolStale, int64(stats.PoolStats.StaleConns), metric.WithAttributes(labels...))
+
+			return nil
+		},
+		totalPoolConns,
+		idlePoolConns,
+		idlePoolStale,
+	); err != nil {
+		panic(err)
+	}
 }
