@@ -19,7 +19,8 @@ var _ Query = (*TruncateTableQuery)(nil)
 func NewTruncateTableQuery(db *DB) *TruncateTableQuery {
 	q := &TruncateTableQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qTruncateTable,
 		},
 	}
 	return q

@@ -10,6 +10,19 @@ import (
 	"github.com/glassdomeinc/clicky/ch/internal"
 )
 
+type queryKind int
+
+const (
+	qInsert queryKind = iota + 1
+	qRaw
+	qSelect
+	qCreateTable
+	qDropTable
+	qTruncateTable
+	qCreateView
+	qDropView
+)
+
 type withQuery struct {
 	name  string
 	query chschema.QueryAppender
@@ -30,6 +43,7 @@ type baseQuery struct {
 	settings       []chschema.QueryWithArgs
 
 	flags internal.Flag
+	kind  queryKind
 }
 
 func (q *baseQuery) clone() baseQuery {
@@ -87,7 +101,7 @@ func (q *baseQuery) setErr(err error) {
 }
 
 func (q *baseQuery) setTableModel(model any) {
-	tm, err := newTableModel(q.db, model)
+	tm, err := newTableModel(q.db, q.kind, model)
 	if err != nil {
 		q.setErr(err)
 		return

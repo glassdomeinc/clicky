@@ -81,7 +81,7 @@ type TableModel interface {
 	Block(fields []*chschema.Field) *chschema.Block
 }
 
-func newTableModel(db *DB, value any) (TableModel, error) {
+func newTableModel(db *DB, kind queryKind, value any) (TableModel, error) {
 	if value, ok := value.(TableModel); ok {
 		return value, nil
 	}
@@ -108,6 +108,9 @@ func newTableModel(db *DB, value any) (TableModel, error) {
 	case reflect.Struct:
 		return newStructTableModelValue(db, v), nil
 	case reflect.Slice:
+		if kind == qInsert && v.Len() == 0 {
+			return nil, errors.New("ch: Model(empty slice)")
+		}
 		elemType := sliceElemType(v)
 		if elemType.Kind() == reflect.Struct {
 			return newSliceTableModel(db, v, elemType), nil
