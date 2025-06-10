@@ -19,8 +19,9 @@ import (
 )
 
 type DBStats struct {
-	Queries uint64
-	Errors  uint64
+	Queries   uint64
+	Errors    uint64
+	PoolStats *chpool.Stats
 }
 
 type DB struct {
@@ -106,9 +107,11 @@ func (db *DB) clone() *DB {
 }
 
 func (db *DB) Stats() DBStats {
+
 	return DBStats{
-		Queries: atomic.LoadUint64(&db.stats.Queries),
-		Errors:  atomic.LoadUint64(&db.stats.Errors),
+		Queries:   atomic.LoadUint64(&db.stats.Queries),
+		Errors:    atomic.LoadUint64(&db.stats.Errors),
+		PoolStats: db.pool.Stats(),
 	}
 }
 
