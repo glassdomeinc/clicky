@@ -19,7 +19,8 @@ var _ Query = (*InsertQuery)(nil)
 func NewInsertQuery(db *DB) *InsertQuery {
 	return &InsertQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qInsert,
 		},
 	}
 }

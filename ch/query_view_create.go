@@ -26,7 +26,8 @@ var _ Query = (*CreateViewQuery)(nil)
 func NewCreateViewQuery(db *DB) *CreateViewQuery {
 	return &CreateViewQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qCreateView,
 		},
 	}
 }

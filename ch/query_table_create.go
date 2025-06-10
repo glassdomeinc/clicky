@@ -25,7 +25,8 @@ var _ Query = (*CreateTableQuery)(nil)
 func NewCreateTableQuery(db *DB) *CreateTableQuery {
 	return &CreateTableQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qCreateTable,
 		},
 	}
 }

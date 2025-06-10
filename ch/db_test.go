@@ -265,6 +265,28 @@ func TestScanArrayUint8(t *testing.T) {
 	require.Equal(t, map[string]any{"ns": []uint8{0, 1, 2}}, m)
 }
 
+func TestInsertEmptySlice(t *testing.T) {
+	ctx := context.Background()
+
+	db := chDB()
+	defer db.Close()
+
+	type Model struct {
+		ID string
+	}
+
+	err := db.ResetModel(ctx, (*Model)(nil))
+	require.NoError(t, err)
+
+	m := make([]Model, 0)
+	_, err = db.NewInsert().Model(&m).Exec(ctx)
+	require.Error(t, err)
+
+	m = []Model{{ID: "id"}}
+	_, err = db.NewInsert().Model(&m).Exec(ctx)
+	require.NoError(t, err)
+}
+
 func TestDateTime64(t *testing.T) {
 	type Model struct {
 		TimeSecPrec       time.Time `ch:"type:DateTime64(0)"`

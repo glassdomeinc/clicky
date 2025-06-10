@@ -39,7 +39,8 @@ var _ Query = (*SelectQuery)(nil)
 func NewSelectQuery(db *DB) *SelectQuery {
 	return &SelectQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qSelect,
 		},
 	}
 }

@@ -17,7 +17,8 @@ type RawQuery struct {
 func NewRawQuery(db *DB, query string, args ...any) *RawQuery {
 	return &RawQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qRaw,
 		},
 		query: query,
 		args:  args,

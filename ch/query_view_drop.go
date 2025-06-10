@@ -21,7 +21,8 @@ var _ Query = (*DropViewQuery)(nil)
 func NewDropViewQuery(db *DB) *DropViewQuery {
 	q := &DropViewQuery{
 		baseQuery: baseQuery{
-			db: db,
+			db:   db,
+			kind: qDropView,
 		},
 	}
 	return q
