@@ -3,7 +3,6 @@ package chotel
 import (
 	"context"
 	"database/sql"
-	"go.opentelemetry.io/otel/metric"
 	"runtime"
 	"strings"
 
@@ -11,6 +10,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/metric"
 	semconv "go.opentelemetry.io/otel/semconv/v1.30.0"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -184,7 +184,7 @@ func ReportDBStatsMetrics(db *ch.DB, opts ...Option) {
 
 	idlePoolStale, _ := meter.Int64ObservableGauge(
 		"go.ch.pool_connections_stale",
-		metric.WithDescription("Number of stale connections removed from the poo"),
+		metric.WithDescription("Number of stale connections removed from the pool"),
 	)
 
 	if _, err := meter.RegisterCallback(
