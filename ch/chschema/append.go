@@ -66,11 +66,10 @@ func AppendNull(b []byte) []byte {
 }
 
 func AppendBool(dst []byte, v bool) []byte {
-	var c byte
 	if v {
-		c = 1
+		return append(dst, "true"...)
 	}
-	return append(dst, c)
+	return append(dst, "false"...)
 }
 
 func AppendFloat(dst []byte, v float64) []byte {
